@@ -1,0 +1,30 @@
+from sqlmodel import SQLModel, Field
+from typing import Optional
+from datetime import datetime
+
+class User(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    username: str = Field(index=True)
+    hashed_password: str
+    role: str = Field(default="viewer")
+    is_active: bool = Field(default=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class Incident(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    title: str
+    description: str
+    created_by: Optional[int]
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class Asset(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    ip: Optional[str]
+    description: Optional[str]
+
+class IOC(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    type: str
+    value: str
+    description: Optional[str]
